@@ -37,7 +37,7 @@ def advertisement_detail(request, pk):
 @login_required
 def add_advertisement(request):
     if request.method == "POST":
-        form = AdvertisementForm(request.POST)
+        form = AdvertisementForm(request.POST, request.FILES)
         if form.is_valid():
             advertisement = form.save(commit=False)
             advertisement.author = request.user
@@ -55,8 +55,8 @@ def edit_advertisement(request, pk):
         if form.is_valid():
             form.instance.author = request.user
             form.save()
-            img_obj = form.instance
-            return redirect('board:advertisement_detail', pk=img_obj.pk)
+
+            return redirect('board:advertisement_detail', pk=advertisement.pk)
             # return redirect('board:advertisement_list')
     else:
         form = AdvertisementForm(instance=advertisement)

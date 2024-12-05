@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <h1>Advertisements</h1>
@@ -8,9 +8,13 @@
 <ul>
   {% for advertisement in advertisements %}
     <li>
-      <a href="{% url 'board:advertisement_detail' pk=advertisement.pk %}">{{ advertisement.title }}</a>
+      <a href="{% url 'board:advertisement_detail' pk=advertisement.pk %}">
+        {% if advertisement.image %}
+          <img src="{{ advertisement.image.url }}" alt="Advertisement Image">
+        {% endif %}
+        {{ advertisement.title }}
+      </a>
     </li>
   {% endfor %}
 </ul>
-
 {% endblock %}
