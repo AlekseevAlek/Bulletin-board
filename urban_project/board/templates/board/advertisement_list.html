@@ -12,7 +12,7 @@
         {% if advertisement.image %}
           <img src="{{ advertisement.image.url }}" alt="Advertisement Image">
         {% endif %}
-        {{ advertisement.title }}
+        {{ advertisement.title }} ({{ advertisement.author.username }})
       </a>
     </li>
   {% endfor %}

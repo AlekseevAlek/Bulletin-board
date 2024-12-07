@@ -3,6 +3,7 @@
 {% block content %}
 <h1>{{ advertisement.title }}</h1>
 <p>{{ advertisement.content }}</p>
+ <p>Author: {{ advertisement.author.username }}</p>
 <a href="{% url 'board:edit_advertisement' advertisement.pk %}">Edit</a>
 <p><a href="{% url 'board:delete_advertisement' advertisement.pk %}">Delete</a></p>
 
