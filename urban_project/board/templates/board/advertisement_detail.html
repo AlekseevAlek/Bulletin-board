@@ -10,4 +10,18 @@
 {% if advertisement.image %}
 <img src="{{ advertisement.image.url }}" alt="Advertisement Image">
 {% endif %}
+
+
+<h3>Likes: {{ advertisement.total_likes }}</h3>
+<form method="post" action="{% url 'board:like_advertisement' advertisement.pk %}">
+    {% csrf_token %}
+    <button type="submit">Like</button>
+</form>
+
+<h3>Dislikes: {{ advertisement.total_dislikes }}</h3>
+<form method="post" action="{% url 'board:dislike_advertisement' advertisement.pk %}">
+    {% csrf_token %}
+    <button type="submit">Dislike</button>
+</form>
+
 {% endblock %}

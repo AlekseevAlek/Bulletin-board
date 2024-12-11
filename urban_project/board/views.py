@@ -3,6 +3,7 @@ from board.models import Advertisement
 from board.forms import AdvertisementForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.shortcuts import get_object_or_404
 
 def logout_view(request):
     logout(request)
@@ -69,3 +70,26 @@ def delete_advertisement(request, pk):
         advertisement.delete()
         return redirect('board:advertisement_list')
     return render(request, 'board/delete_advertisement.html', {'advertisement': advertisement})
+
+@login_required
+def like_advertisement(request, pk):
+    advertisement = get_object_or_404(Advertisement, pk=pk)
+
+    if request.user in advertisement.likes.all():
+        advertisement.likes.remove(request.user)
+    else:
+        advertisement.likes.add(request.user)
+
+    return redirect('board:advertisement_detail', pk=advertisement.pk)
+
+
+@login_required
+def dislike_advertisement(request, pk):
+    advertisement = get_object_or_404(Advertisement, pk=pk)
+
+    if request.user in advertisement.dislikes.all():
+        advertisement.dislikes.remove(request.user)
+    else:
+        advertisement.dislikes.add(request.user)
+
+    return redirect('board:advertisement_detail', pk=advertisement.pk)
