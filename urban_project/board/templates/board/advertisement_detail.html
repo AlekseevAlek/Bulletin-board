@@ -1,15 +1,24 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h1>{{ advertisement.title }}</h1>
+
 <p>{{ advertisement.content }}</p>
- <p>Author: {{ advertisement.author.username }}</p>
-<a href="{% url 'board:edit_advertisement' advertisement.pk %}">Edit</a>
-<p><a href="{% url 'board:delete_advertisement' advertisement.pk %}">Delete</a></p>
+
+<h3>Автор: {{ advertisement.author.username }}</h3>
+
+<h3>Дата создания: {{ advertisement.created_at }}</h3>
 
 {% if advertisement.image %}
-<img src="{{ advertisement.image.url }}" alt="Advertisement Image">
+    <img src="{{ advertisement.image.url }}" alt="Объявление">
 {% endif %}
+
+<h3>Статистика:</h3>
+<ul>
+    <li>Создано объявлений: {{ advertisement.get_stats.created_advertisements }}</li>
+    <li>Лайков: {{ advertisement.get_stats.total_likes }}</li>
+    <li>Дизлайков: {{ advertisement.get_stats.total_dislikes }}</li>
+</ul>
 
 
 <h3>Likes: {{ advertisement.total_likes }}</h3>
@@ -24,4 +33,5 @@
     <button type="submit">Dislike</button>
 </form>
 
+<a href="{% url 'board:advertisement_list' %}">Вернуться к списку объявлений</a>
 {% endblock %}
