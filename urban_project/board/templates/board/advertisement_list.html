@@ -6,7 +6,7 @@
     <a href="{% url 'board:add_advertisement' %}"><button>Add Advertisement</button></a>
 {% endif %}
 <ul>
-  {% for advertisement in advertisements %}
+  {% for advertisement in page_obj %}
     <li>
       <a href="{% url 'board:advertisement_detail' pk=advertisement.pk %}">
         {% if advertisement.image %}
@@ -17,4 +17,26 @@
     </li>
   {% endfor %}
 </ul>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% else %}
+            <span class="disabled">&laquo;</span>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% else %}
+            <span class="disabled">&raquo;</span>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
